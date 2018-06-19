@@ -1,3 +1,4 @@
+const _ = require('lodash')
 /**
  * Provide class to help manage pallet
  *
@@ -25,11 +26,21 @@ class PalletManager {
   onInput(msg) {
     try {
       const { namespace, entity, event } = this;
+      const payloadEvent = msg.payload.event;
 
-      this.log('namespace ->', namespace);
+      const trigger = { namespace, entity, event };
 
-      msg.payload = { status: 200 };
-      this.send(msg);
+      // todo: extend logic here
+      if(payloadEvent &&
+         payloadEvent.namespace === namespace &&
+         payloadEvent.entity === entity) {
+
+        _.extend(msg.payload, { trigger });
+        this.send(msg);
+      } else {
+        this.warn('no trigger was found');
+      }
+
     } catch (error) {
       this.error(error);
     }
