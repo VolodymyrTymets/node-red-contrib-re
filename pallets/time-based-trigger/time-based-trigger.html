@@ -1,0 +1,69 @@
+<!-- Edit dialog -->
+<script type="text/x-red" data-template-name="time-based-trigger">
+<!--INPUT-->
+<div class="form-row">
+   <label for="node-input-interval"><i class="fa fa-tag"></i></label>
+   <select id="node-input-interval" placeholder="Intervall">
+       <option value="interval" disabled selected>Intervall</option>
+       <option value="monthly">Monthly</option>
+       <option value="weekly">Weekly</option>
+       <option value="daily">Daily</option>
+   </select>
+</div>
+<div class="form-row">
+       <label for="node-input-at"><i class="fa fa-tag"></i></label>
+       <select id="node-input-at">
+         <option value="at" disabled selected>At</option>
+       </select>
+</div>
+</script>
+
+<script type="text/x-red" data-help-name="time-based-trigger">
+  <p>
+   VT test pallets
+  </p>
+</script>
+
+<!-- Defining a node -->
+<script type="text/javascript">
+    RED.nodes.registerType('time-based-trigger', {
+        category: 'output',
+        color: '#ffca28',
+        inputs: 1,
+        outputs: 1,
+        label: function() {     // sets the default label contents
+            return this.name ||'time-based-trigger';
+        },
+        oneditprepare: function() {
+            const node = this;
+
+            $('#node-input-interval').on('change', function () {
+                if (this.firstElementChild.value == 'interval') this.remove(this.firstElementChild);
+                switch (this.value) {
+                    case 'monthly': {
+                        const totalDays = 31;
+                        for (let i = 1; i <= totalDays; i++) {
+                            $('#node-input-at').append($(`<option value=${i}>${i}</option>`));
+                        }
+                        break;
+                    }
+                    case 'weekly': {
+                        $('#node-input-at').innerHTML = '';
+                        const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+                        for ( let day of days) {
+                            $('#node-input-at').append($(`<option value=${day}>${day}</option>`));
+                        }
+                        break;
+                    }
+                    case 'daily': {
+                        const totalHours = 24;
+                        for (let i = 1; i <= totalHours; i++) {
+                            $('#node-input-at').append($(`<option value=${i}>${i}</option>`));
+                        }
+                        break;
+                    }
+                }
+            })
+        }
+    })
+</script>

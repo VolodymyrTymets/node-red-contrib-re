@@ -1,0 +1,14 @@
+{
+  "name": "node-red-time-based-trigger",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "node-red": {
+    "nodes": {
+      "time-based-trigger": "time-based-trigger.js"
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
