@@ -1,12 +1,13 @@
 <!-- Defining a node -->
 <script type="text/javascript">
     RED.nodes.registerType('time-based-trigger', {
-        category: 'output',
-        color: '#ffca28',
+        category: 'Rightmart Events',
+        color: '#d2f81d',
+        //icon: 'delay.png',
         defaults: {
-            name: {value: 'time-based-trigger'},
-            interval: {value:"monthly"},
-            atInput: {value:"1"}
+            name: { value: 'time-based-trigger' },
+            interval: { value:"monthly" },
+            value: { value: 0 },
         },
         inputs: 1,
         outputs: 1,
@@ -14,12 +15,16 @@
             return this.name ||'time-based-trigger';
         },
         oneditprepare: function() {
-            var node = this;
-            var atInput = this.atInput;
+            const node = this;
+            let value = this.value;
 
             setTimeout(function () {
-                $('#node-input-entity option[value='+ atInput+']').attr('selected', atInput);
-            }, 300);
+                $('#node-input-at option[value='+ value +']').attr('selected', value);
+            }, 0);
+
+            $('#node-input-at').on('change', function (e) {
+                 node.value = e.target.value;
+            });
 
             $('#node-input-interval').on('change', function (e) {
                 $('#node-input-at').find('option').remove().end();
@@ -56,23 +61,30 @@
 <!-- Edit dialog -->
 <script type="text/x-red" data-template-name="time-based-trigger">
 <!--INPUT-->
-<div class="form-row">
-   <label for="node-input-interval"><i class="fa fa-tag"></i>Intervall</label>
-   <select id="node-input-interval" placeholder="Interval">
-       <option value="monthly" selected>Monthly</option>
-       <option value="weekly">Weekly</option>
-       <option value="daily">Daily</option>
-   </select>
-</div>
-<div class="form-row">
-       <label for="node-input-at"><i class="fa fa-tag"></i>At</label>
-       <select id="node-input-at">
+<div>
+    <p>Trigger</p>
+    <h3>Inputs</h3>
+    <div class="form-row">
+       <label for="node-input-interval"><i class="fa fa-tag"></i>Intervall</label>
+       <select id="node-input-interval" placeholder="Interval">
+           <option value="monthly" selected>Monthly</option>
+           <option value="weekly">Weekly</option>
+           <option value="daily">Daily</option>
        </select>
-</div>
-<div class="form-row">
-      <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
-      <input type="text" id="node-input-name" placeholder="Name">
     </div>
+    <div class="form-row">
+           <label for="node-input-at"><i class="fa fa-tag"></i>At</label>
+           <select id="node-input-at">
+           </select>
+    </div>
+    <div class="form-row">
+          <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+          <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <h3>Outputs</h3>
+    <h3>Details</h3>
+    <h3>Preferences</h3>
+</div>
 </script>
 
 <script type="text/x-red" data-help-name="time-based-trigger">
