@@ -1,45 +1,31 @@
-<!-- Edit dialog -->
-<script type="text/x-red" data-template-name="time-based-trigger">
-<!--INPUT-->
-<div class="form-row">
-   <label for="node-input-interval"><i class="fa fa-tag"></i></label>
-   <select id="node-input-interval" placeholder="Intervall">
-       <option value="interval" disabled selected>Intervall</option>
-       <option value="monthly">Monthly</option>
-       <option value="weekly">Weekly</option>
-       <option value="daily">Daily</option>
-   </select>
-</div>
-<div class="form-row">
-       <label for="node-input-at"><i class="fa fa-tag"></i></label>
-       <select id="node-input-at">
-         <option value="at" disabled selected>At</option>
-       </select>
-</div>
-</script>
-
-<script type="text/x-red" data-help-name="time-based-trigger">
-  <p>
-   VT test pallets
-  </p>
-</script>
-
 <!-- Defining a node -->
 <script type="text/javascript">
     RED.nodes.registerType('time-based-trigger', {
         category: 'output',
         color: '#ffca28',
+        defaults: {
+            name: {value: 'time-based-trigger'},
+            interval: {value:"monthly"},
+            atInput: {value:"1"}
+        },
         inputs: 1,
         outputs: 1,
         label: function() {     // sets the default label contents
             return this.name ||'time-based-trigger';
         },
         oneditprepare: function() {
-            const node = this;
+            var node = this;
+            var atInput = this.atInput;
 
-            $('#node-input-interval').on('change', function () {
-                $('#node-input-at').empty();
-                switch (this.value) {
+            setTimeout(function () {
+                $('#node-input-entity option[value='+ atInput+']').attr('selected', atInput);
+            }, 300);
+
+            $('#node-input-interval').on('change', function (e) {
+                $('#node-input-at').find('option').remove().end();
+                var value = e.target.value;
+
+                switch (value) {
                     case 'monthly': {
                         const totalDays = 31;
                         for (let i = 1; i <= totalDays; i++) {
@@ -48,7 +34,6 @@
                         break;
                     }
                     case 'weekly': {
-                        $('#node-input-at').innerHTML = '';
                         const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
                         for ( let day of days) {
                             $('#node-input-at').append($(`<option value=${day}>${day}</option>`));
@@ -66,4 +51,32 @@
             })
         }
     })
+</script>
+
+<!-- Edit dialog -->
+<script type="text/x-red" data-template-name="time-based-trigger">
+<!--INPUT-->
+<div class="form-row">
+   <label for="node-input-interval"><i class="fa fa-tag"></i>Intervall</label>
+   <select id="node-input-interval" placeholder="Interval">
+       <option value="monthly" selected>Monthly</option>
+       <option value="weekly">Weekly</option>
+       <option value="daily">Daily</option>
+   </select>
+</div>
+<div class="form-row">
+       <label for="node-input-at"><i class="fa fa-tag"></i>At</label>
+       <select id="node-input-at">
+       </select>
+</div>
+<div class="form-row">
+      <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+      <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="time-based-trigger">
+  <p>
+   VT test pallets
+  </p>
 </script>
