@@ -14,6 +14,32 @@
     },
     inputs:1,
     outputs:1,
+    label: function () { return this.name || 're-trigger'; },
+    oneditprepare: function () {
+
+      var entity = this.entity;
+      setTimeout(function () {
+        $('#node-input-entity option[value='+ entity +']').attr('selected', entity);
+      }, 300);
+
+      $('#node-input-namespace').on('change', function (e) {
+        $('#node-input-entity').find('option').remove().end();
+        var value = e.target.value;
+        switch (value){
+          case 'service-core': {
+            return $('#node-input-entity')
+              .append('<option value="user" >User</option>')
+              .append('<option value="process" >Process</option>');
+          }
+          case 'service-manager': {
+            return $('#node-input-entity')
+              .append('<option value="file" >File</option>')
+              .append('<option value="model" >Model</option>');
+          }
+        }
+        return;
+      })
+    },
   });
 </script>
 
@@ -33,10 +59,8 @@
     <div class="form-row">
       <label for="node-input-entity"><i class="fa fa-tag"></i> Entity</label>
       <select id="node-input-entity">
-        <option value="volvo" selected>Volvo</option>
-        <option value="saab">Saab</option>
-        <option value="mercedes">Mercedes</option>
-        <option value="audi">Audi</option>
+        <option value="User" selected>User</option>
+        <option value="process" >Process</option>
       </select>
     </div>
 
