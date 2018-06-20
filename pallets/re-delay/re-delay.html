@@ -1,0 +1,58 @@
+<!-- Defining a node -->
+<script type="text/javascript">
+  RED.nodes.registerType('RE-delay',{
+    category: 'Rightmart Events', // the palette category
+    color: '#d2f81d',
+    icon: 'delay.png', // saved in  icons
+    defaults: {
+      name: { value: 'RE-delay' },
+      interval: {
+        value: 'month',
+      },
+      value: { value: 0 },
+    },
+    inputs:1,
+    outputs:1,
+    label: function () { return this.name || 'RE-delay'; },
+  });
+</script>
+
+
+<!-- Edit dialog -->
+<script type="text/x-red" data-template-name="RE-delay">
+  <div>
+    <p>Trigger </p>
+    <h3>Inputs</h3>
+    <div class="form-row">
+      <label for="node-input-interval"><i class="fa fa-tag"></i> Interval</label>
+      <select id="node-input-interval">
+        <option value="month"> Month</option>
+        <option value="day"> Day</option>
+        <option value="hour"> Hour</option>
+        <option value="minute"> Minute</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label for="node-input-value"><i class="fa fa-tag"></i> Value</label>
+      <input type="number" id="node-input-value" placeholder="Value">
+    </div>
+    <div class="form-row">
+      <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+      <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <h3>Outputs</h3>
+    <h3>Details</h3>
+    <h3>References</h3>
+  </div>
+
+</script>
+
+
+<!-- Help text  -->
+<script type="text/x-red" data-help-name="RE-delay">
+  <p>
+    Help text here
+  </p>
+</script>
+
+
