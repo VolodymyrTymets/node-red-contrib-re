@@ -1,0 +1,70 @@
+<!-- Defining a node -->
+<script type="text/javascript">
+  RED.nodes.registerType('re-task',{
+    category: 'formats', // the palette category
+    color: '#E6E0F8',
+    icon: 'hash.png', // saved in  icons
+    defaults: {
+      name: { value:'' },
+      namespace: {
+        value: 'service-core',
+      },
+      entity: { value: 'volvo' },
+      event: { value: 'create' },
+    },
+    inputs:1,
+    outputs:1,
+  });
+</script>
+
+
+<!-- Edit dialog -->
+<script type="text/x-red" data-template-name="re-task">
+  <div>
+    <p>Task </p>
+    <h3>Inputs</h3>
+    <div class="form-row">
+      <label for="node-input-namespace"><i class="fa fa-tag"></i> Namespace</label>
+      <select id="node-input-namespace">
+        <option value="service-core" selected>service-core</option>
+        <option value="service-manager"> service-manager</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label for="node-input-entity"><i class="fa fa-tag"></i> Entity</label>
+      <select id="node-input-entity">
+        <option value="volvo" selected>Volvo</option>
+        <option value="saab">Saab</option>
+        <option value="mercedes">Mercedes</option>
+        <option value="audi">Audi</option>
+      </select>
+    </div>
+
+    <div class="form-row">
+      <label for="node-input-event"><i class="fa fa-tag"></i> Event</label>
+      <select id="node-input-event">
+        <option value="create" selected>CREATE</option>
+        <option value="update">UPDATE</option>
+        <option value="delete">DELETE</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+      <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <h3>Outputs</h3>
+    <h3>Details</h3>
+    <h3>References</h3>
+  </div>
+
+</script>
+
+
+<!-- Help text  -->
+<script type="text/x-red" data-help-name="re-task">
+  <p>
+    Help text here
+  </p>
+</script>
+
+
