@@ -28,7 +28,7 @@
 
             $('#node-input-interval').on('change', function (e) {
                 $('#node-input-at').find('option').remove().end();
-                var value = e.target.value;
+                const value = e.target.value;
 
                 switch (value) {
                     case 'monthly': {
