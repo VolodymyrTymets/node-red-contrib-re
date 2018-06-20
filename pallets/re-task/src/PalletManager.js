@@ -18,7 +18,9 @@ class PalletManager {
     node.context().global.set('taskQueue', taskQueue);
 
     this.onInput = this.onInput.bind(this._self);
-    this._getQueue = this._getQueue.bind(this._self);
+    this._self._getQueue = this._getQueue.bind(this._self);
+    this._self._processError = this._processError.bind(this._self);
+    this._self._processSuccess = this._processSuccess.bind(this._self);
   }
 
   _getQueue(){
@@ -30,12 +32,9 @@ class PalletManager {
     this.error(message);
     this.status({ fill:"red", shape:"dot", text: message});
   }
-  _processSucess(message) {
+  _processSuccess(message) {
     this.status({ fill:"green", shape:"dot", text: message });
   }
-
-
-
 
   /**
    * Provide on input event
@@ -61,7 +60,7 @@ class PalletManager {
       // Created by Event XYZ
       // Input params of the node
       const taskPayload = {
-        nodeName: ''
+        nodeName: '',
         triggerTimestamp: new Date().getTime(),
         taskTimestamp: new Date().getTime(),
         CreatedByEvent: {},
@@ -69,15 +68,14 @@ class PalletManager {
       };
 
       this._getQueue().process(NAME, taskManager.testTask);
-      this._getQueue().create(NAME, taskPayload).save((err, job) => {
+      this._getQueue().create(NAME, taskPayload).save((err) => {
         if(err) {  return this._processError(err) };
-        console.log('new job -> ', job);
         this.send(msg);
-        return this._processSucess('Added to queue');
+        return this._processSuccess('Added to queue');
       });
     } catch (error) {
+      console.log(error)
       return this._processError(error);
-      this.error(error);
     }
   }
 }

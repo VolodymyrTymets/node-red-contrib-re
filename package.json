@@ -8,12 +8,14 @@
   },
   "node-red": {
     "nodes": {
-      "re-trigger": "/pallets/re-trigger/re-trigger.js"
+      "re-trigger": "/pallets/re-trigger/re-trigger.js",
+      "re-task": "/pallets/re-task/re-task.js"
     }
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "kue": "^0.11.6",
     "lodash": "^4.17.10"
   }
 }
