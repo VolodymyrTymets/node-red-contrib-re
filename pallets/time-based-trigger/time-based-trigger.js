@@ -1,4 +1,4 @@
-const { PalletManager } = require('../re-trigger/src/PalletManager');
+//const { PalletManager } = require('../re-trigger/src/PalletManager');
 const  MODULE_NAME = 'time-based-trigger';
 
 module.exports = function(RED) {
@@ -6,9 +6,9 @@ module.exports = function(RED) {
         RED.nodes.createNode(this, config);
 
         const node = this;
-        const palletManager = new PalletManager(RED, config, node);
+        //const palletManager = new PalletManager(RED, config, node);
 
-        node.on('input', palletManager.onInput);
+        node.on('input', () => {});
     }
 
     RED.nodes.registerType(MODULE_NAME, nodeGo);

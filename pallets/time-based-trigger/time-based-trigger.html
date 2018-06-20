@@ -38,7 +38,7 @@
             const node = this;
 
             $('#node-input-interval').on('change', function () {
-                if (this.firstElementChild.value == 'interval') this.remove(this.firstElementChild);
+                $('#node-input-at').empty();
                 switch (this.value) {
                     case 'monthly': {
                         const totalDays = 31;
