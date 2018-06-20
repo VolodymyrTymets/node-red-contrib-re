@@ -1,11 +1,11 @@
 <!-- Defining a node -->
 <script type="text/javascript">
-  RED.nodes.registerType('re-task',{
-    category: 'formats', // the palette category
+  RED.nodes.registerType('RE-task',{
+    category: 'Rightmart Events', // the palette category
     color: '#E6E0F8',
-    icon: 'hash.png', // saved in  icons
+    icon: 'task.png', // saved in  icons
     defaults: {
-      name: { value:'' },
+      name: { value: 'RE-task' },
       namespace: {
         value: 'service-core',
       },
@@ -14,12 +14,13 @@
     },
     inputs:1,
     outputs:1,
+    label: function () { return this.name || 'RE-task'; },
   });
 </script>
 
 
 <!-- Edit dialog -->
-<script type="text/x-red" data-template-name="re-task">
+<script type="text/x-red" data-template-name="RE-task">
   <div>
     <p>Task </p>
     <h3>Inputs</h3>
@@ -61,7 +62,7 @@
 
 
 <!-- Help text  -->
-<script type="text/x-red" data-help-name="re-task">
+<script type="text/x-red" data-help-name="RE-task">
   <p>
     Help text here
   </p>

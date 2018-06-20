@@ -8,8 +8,9 @@
   },
   "node-red": {
     "nodes": {
-      "re-trigger": "/pallets/re-trigger/re-trigger.js",
-      "re-task": "/pallets/re-task/re-task.js"
+      "RE-trigger": "/pallets/re-trigger/re-trigger.js",
+      "RE-task": "/pallets/re-task/re-task.js",
+      "RE-daley": "/pallets/re-delay/re-delay.js"
     }
   },
   "author": "",

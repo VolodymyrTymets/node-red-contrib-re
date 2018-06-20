@@ -1,11 +1,11 @@
 <!-- Defining a node -->
 <script type="text/javascript">
-  RED.nodes.registerType('re-trigger',{
-    category: 'formats', // the palette category
+  RED.nodes.registerType('RE-trigger',{
+    category: 'Rightmart Events', // the palette category
     color: '#E6E0F8',
     icon: 'trigger.png', // saved in  icons
     defaults: {
-      name: { value:'' },
+      name: { value: 'RE-trigger' },
       namespace: {
         value: 'service-core',
       },
@@ -14,7 +14,7 @@
     },
     inputs:1,
     outputs:1,
-    label: function () { return this.name || 're-trigger'; },
+    label: function () { return this.name || 'RE-trigger'; },
     oneditprepare: function () {
 
       var entity = this.entity;
@@ -45,7 +45,7 @@
 
 
 <!-- Edit dialog -->
-<script type="text/x-red" data-template-name="re-trigger">
+<script type="text/x-red" data-template-name="RE-trigger">
   <div>
     <p>Trigger </p>
     <h3>Inputs</h3>
@@ -85,7 +85,7 @@
 
 
 <!-- Help text  -->
-<script type="text/x-red" data-help-name="re-trigger">
+<script type="text/x-red" data-help-name="RE-trigger">
   <p>
     Help text here
   </p>

@@ -6,13 +6,14 @@
 
 class TaskManager {
   constructor(node) {
-    this._node  = node;
+    this._node = node;
     this.testTask = this.testTask.bind(this);
   }
 
   testTask(job, done) {
-    console.log('I am Task');
     this._node.log('I am Task');
+    // todo: move all messages to single file
+    this._node._processSuccess('Task is processed successfully.');
     done();
   }
 }

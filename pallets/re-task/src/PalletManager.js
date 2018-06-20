@@ -1,4 +1,5 @@
 const { TaskManager } = require('./TaskManager');
+const { PalletManagerBase  } = require('../../../src/utils/PalletManagerBase');
 const kue = require('kue');
 
 /**
@@ -6,9 +7,9 @@ const kue = require('kue');
  *
  * **/
 
-class PalletManager {
+class PalletManager extends PalletManagerBase {
   constructor(RED, palletConfig, node) {
-    this._self = node;
+    super(RED, palletConfig, node);
 
     this._self.namespace = palletConfig.namespace;
     this._self.entity = palletConfig.entity;
@@ -19,21 +20,10 @@ class PalletManager {
 
     this.onInput = this.onInput.bind(this._self);
     this._self._getQueue = this._getQueue.bind(this._self);
-    this._self._processError = this._processError.bind(this._self);
-    this._self._processSuccess = this._processSuccess.bind(this._self);
   }
 
   _getQueue(){
     return this.context().global.get('taskQueue');
-  }
-
-  _processError(err) {
-    const message  = typeof err === 'string' ? err : err.message;
-    this.error(message);
-    this.status({ fill:"red", shape:"dot", text: message});
-  }
-  _processSuccess(message) {
-    this.status({ fill:"green", shape:"dot", text: message });
   }
 
   /**
@@ -47,8 +37,7 @@ class PalletManager {
   onInput(msg) {
     try {
       const { namespace, entity, event } = this;
-
-      this.log('namespace ->', namespace);
+      const { delay } = msg.payload;
 
       const taskManager = new TaskManager(this);
       const NAME = 'test_task';
@@ -68,13 +57,19 @@ class PalletManager {
       };
 
       this._getQueue().process(NAME, taskManager.testTask);
-      this._getQueue().create(NAME, taskPayload).save((err) => {
+      let job = this._getQueue().create(NAME, taskPayload);
+
+      if(delay) {
+        job = job.delay(delay);
+      }
+
+      job.save((err) => {
         if(err) {  return this._processError(err) };
         this.send(msg);
-        return this._processSuccess('Added to queue');
+        return this._process('Added to queue');
       });
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return this._processError(error);
     }
   }
