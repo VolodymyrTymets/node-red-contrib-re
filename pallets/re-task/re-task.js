@@ -1,5 +1,5 @@
 const { PalletManager } = require('./src/PalletManager');
-const  MODULE_NAME = 'RE-trigger';
+const  MODULE_NAME = 'RE-task';
 
 module.exports = function(RED) {
   'use strict';

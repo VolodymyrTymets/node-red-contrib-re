@@ -1,4 +1,4 @@
-const _ = require('lodash')
+const _ = require('lodash');
 /**
  * Provide class to help manage pallet
  *
