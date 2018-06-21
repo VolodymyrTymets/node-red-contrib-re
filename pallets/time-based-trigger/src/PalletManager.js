@@ -1,12 +1,13 @@
 const _ = require('lodash');
+const { PalletManagerBase  } = require('../../../src/utils/PalletManagerBase');
 /**
  * Provide class to help manage pallet
  *
  * **/
 
-class PalletManager {
-  constructor(RED, palletConfig, node) {
-    this._self = node;
+class PalletManager extends  PalletManagerBase{
+    constructor(RED, palletConfig, node) {
+    super(RED, palletConfig, node);
 
     this._self.interval = palletConfig.interval;
     this._self.value = palletConfig.value;
@@ -17,23 +18,23 @@ class PalletManager {
     _getCronString(interval, value) {
       let cronsString = '';
       switch (interval) {
-          case 'monthly': {
-              cronsString = `***/${value}**`;
-              break;
+        case 'monthly': {
+          cronsString = `***/${value}**`;
+          break;
+        }
+        case 'weekly': {
+          const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+          for (let day of days) {
+            if (day === value) {
+              cronsString = `*****/${days.indexOf(day)}`;
+            }
           }
-          case 'weekly': {
-              const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-              for (let day of days) {
-                  if (day === value) {
-                      cronsString = `*****/${days.indexOf(day)}`;
-                  }
-              }
-              break;
-          }
-          case 'daily': {
-              cronsString = `**/${value}***`;
-              break;
-          }
+          break;
+        }
+        case 'daily': {
+          cronsString = `**/${value}***`;
+          break;
+        }
       }
       return cronsString;
   }
@@ -47,15 +48,15 @@ class PalletManager {
    *      this.send(msg);
    * **/
   onInput(msg) {
-      try {
-          const {interval, value} = this;
-          const delay = this._getCronString(interval, value);
+    try {
+      const {interval, value} = this;
+      const delay = this._getCronString(interval, value);
 
-          _.extend(msg.payload, {delay});
-          this.send(msg);
-      } catch (error) {
-          this.error(error);
-      }
+      _.extend(msg.payload, {delay});
+      this.send(msg);
+    } catch (error) {
+      this.error(error);
+    }
   }
 }
 

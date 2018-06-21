@@ -20,19 +20,15 @@
         oneditprepare: function() {
             const node = this;
             let value = this.value;
-
             setTimeout(function () {
                 $('#node-input-at option[value='+ value +']').attr('selected', value);
             }, 0);
-
             $('#node-input-at').on('change', function (e) {
                  node.value = e.target.value;
             });
-
             $('#node-input-interval').on('change', function (e) {
                 $('#node-input-at').find('option').remove().end();
                 const value = e.target.value;
-
                 switch (value) {
                     case 'monthly': {
                         const totalDays = 31;

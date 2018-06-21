@@ -10,7 +10,8 @@
     "nodes": {
       "RE-trigger": "/pallets/re-trigger/re-trigger.js",
       "RE-task": "/pallets/re-task/re-task.js",
-      "RE-daley": "/pallets/re-delay/re-delay.js"
+      "RE-daley": "/pallets/re-delay/re-delay.js",
+      "time-based-trigger": "/pallets/time-based-trigger/time-based-trigger.js"
     }
   },
   "author": "",
