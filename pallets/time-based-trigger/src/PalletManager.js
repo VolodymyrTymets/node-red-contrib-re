@@ -6,37 +6,37 @@ const { PalletManagerBase  } = require('../../../src/utils/PalletManagerBase');
  * **/
 
 class PalletManager extends  PalletManagerBase{
-    constructor(RED, palletConfig, node) {
-    super(RED, palletConfig, node);
+  constructor(RED, palletConfig, node) {
+  super(RED, palletConfig, node);
 
-    this._self.interval = palletConfig.interval;
-    this._self.value = palletConfig.value;
-    this._getCronString = this._getCronString.bind(this._self);
-    this.onInput = this.onInput.bind(this._self);
+  this._self.interval = palletConfig.interval;
+  this._self.value = palletConfig.value;
+  this._self._getCronString = this._getCronString.bind(this._self);
+  this.onInput = this.onInput.bind(this._self);
   }
 
-    _getCronString(interval, value) {
-      let cronsString = '';
-      switch (interval) {
-        case 'monthly': {
-          cronsString = `***/${value}**`;
-          break;
-        }
-        case 'weekly': {
-          const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-          for (let day of days) {
-            if (day === value) {
-              cronsString = `*****/${days.indexOf(day)}`;
-            }
-          }
-          break;
-        }
-        case 'daily': {
-          cronsString = `**/${value}***`;
-          break;
-        }
+  _getCronString(interval, value) {
+    let cronsString = '';
+    switch (interval) {
+      case 'monthly': {
+        cronsString = `***/${value}**`;
+        break;
       }
-      return cronsString;
+      case 'weekly': {
+        const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        for (let day of days) {
+          if (day === value) {
+            cronsString = `*****/${days.indexOf(day)}`;
+          }
+        }
+        break;
+      }
+      case 'daily': {
+        cronsString = `**/${value}***`;
+        break;
+      }
+    }
+    return cronsString;
   }
 
   /**
@@ -51,8 +51,12 @@ class PalletManager extends  PalletManagerBase{
     try {
       const {interval, value} = this;
       const delay = this._getCronString(interval, value);
+      console.log('delay-->>', delay);
 
-      _.extend(msg.payload, {delay});
+      _.extend(msg, {
+        payload: delay
+      });
+      console.log('msg-->>', msg);
       this.send(msg);
     } catch (error) {
       this.error(error);
