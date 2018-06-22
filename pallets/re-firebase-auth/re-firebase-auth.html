@@ -1,0 +1,51 @@
+<!-- Defining a node -->
+<script type="text/javascript">
+  RED.nodes.registerType('RE-firebase-auth',{
+    category: 'Rightmart Events', // the palette category
+    color: '#f87a23',
+    icon: 'firebase-auth.png', // saved in  icons
+    inputs:1,
+    outputs:1,
+    defaults: {
+      name: { value: 'RE-firebase-auth' },
+      email: { value: '', },
+      password: { value: '' },
+    },
+    label: function () { return this.name || 'RE-firebase-auth'; },
+  });
+</script>
+
+
+<!-- Edit dialog -->
+<script type="text/x-red" data-template-name="RE-firebase-auth">
+  <div>
+    <p>Trigger </p>
+    <h3>Inputs</h3>
+    <div class="form-row">
+      <label for="node-input-email"><i class="fa fa-at"></i> E-mail</label>
+      <input type="email" id="node-input-email" placeholder="E-mail">
+    </div>
+    <div class="form-row">
+      <label for="node-input-password"><i class="fa fa-key"></i> Password</label>
+      <input type="password" id="node-input-password" placeholder="***">
+    </div>
+    <div class="form-row">
+      <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+      <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <h3>Outputs</h3>
+    <h3>Details</h3>
+    <h3>References</h3>
+  </div>
+
+</script>
+
+
+<!-- Help text  -->
+<script type="text/x-red" data-help-name="RE-firebase-auth">
+  <p>
+    Help text here
+  </p>
+</script>
+
+
