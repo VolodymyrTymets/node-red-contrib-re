@@ -39,9 +39,7 @@
           }
           case 'weekly': {
             const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-            for (let day of days) {
-              $('#node-input-at').append($(`<option value=${day}>${day}</option>`));
-            }
+            days.forEach(day => $('#node-input-at').append($(`<option value=${day}>${day}</option>`)));
             break;
           }
           case 'daily': {

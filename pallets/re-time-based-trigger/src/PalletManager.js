@@ -16,27 +16,15 @@ class PalletManager extends  PalletManagerBase{
   }
 
   _getCronString(interval, value) {
-    let cronsString = '';
     switch (interval) {
-      case 'monthly': {
-        cronsString = `***/${value}**`;
-        break;
-      }
-      case 'weekly': {
+      case 'monthly':
+        return `***/${value}**`;
+      case 'weekly':
         const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        for (let day of days) {
-          if (day === value) {
-            cronsString = `*****/${days.indexOf(day)}`;
-          }
-        }
-        break;
-      }
-      case 'daily': {
-        cronsString = `**/${value}***`;
-        break;
-      }
+        return `*****/${days.findIndex(day => day === value)}`;
+      case 'daily':
+        return `**/${value}***`;
     }
-    return cronsString;
   }
 
   /**
