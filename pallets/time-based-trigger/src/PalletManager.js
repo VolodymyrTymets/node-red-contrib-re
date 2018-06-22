@@ -51,12 +51,10 @@ class PalletManager extends  PalletManagerBase{
     try {
       const {interval, value} = this;
       const delay = this._getCronString(interval, value);
-      console.log('delay-->>', delay);
 
       _.extend(msg, {
         payload: delay
       });
-      console.log('msg-->>', msg);
       this.send(msg);
     } catch (error) {
       this.error(error);
