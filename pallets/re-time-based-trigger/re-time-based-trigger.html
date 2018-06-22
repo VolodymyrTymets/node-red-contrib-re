@@ -1,0 +1,92 @@
+<!-- Defining a node -->
+<script type="text/javascript">
+  RED.nodes.registerType('RE-time-based-trigger', {
+    category: 'Rightmart Events',
+    color: '#d2f81d',
+    //icon: 'delay.png',
+    defaults: {
+      name: {value: ''},
+      interval: {value: "monthly"},
+      value: {value: 0},
+    },
+    inputs: 1,
+    outputs: 1,
+    label: function () {     // sets the default label contents
+      return this.name || 'RE-time-based-trigger';
+    },
+    labelStyle: function () {
+      return this.name ? "node_label_italic" : "";
+    },
+    oneditprepare: function () {
+      const node = this;
+      let value = this.value;
+      setTimeout(function () {
+        $('#node-input-at option[value=' + value + ']').attr('selected', value);
+      }, 0);
+      $('#node-input-at').on('change', function (e) {
+        node.value = e.target.value;
+      });
+      $('#node-input-interval').on('change', function (e) {
+        $('#node-input-at').find('option').remove().end();
+        const value = e.target.value;
+        switch (value) {
+          case 'monthly': {
+            const totalDays = 31;
+            for (let i = 1; i <= totalDays; i++) {
+              $('#node-input-at').append($(`<option value=${i}>${i}</option>`));
+            }
+            break;
+          }
+          case 'weekly': {
+            const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+            days.forEach(day => $('#node-input-at').append($(`<option value=${day}>${day}</option>`)));
+            break;
+          }
+          case 'daily': {
+            const totalHours = 24;
+            for (let i = 0; i < totalHours; i++) {
+              $('#node-input-at').append($(`<option value=${i}>${i}</option>`));
+            }
+            break;
+          }
+        }
+      })
+    }
+  })
+</script>
+
+<!-- Edit dialog -->
+<script type="text/x-red" data-template-name="RE-time-based-trigger">
+<!--INPUT-->
+<div>
+  <p>Trigger</p>
+  <h3>Inputs</h3>
+  <div class="form-row">
+    <label for="node-input-interval"><i class="fa fa-tag"></i>Intervall</label>
+    <select id="node-input-interval" placeholder="Interval">
+      <option value="monthly" selected>Monthly</option>
+      <option value="weekly">Weekly</option>
+      <option value="daily">Daily</option>
+      </select>
+  </div>
+  <div class="form-row">
+    <label for="node-input-at"><i class="fa fa-tag"></i>At</label>
+    <select id="node-input-at">
+    </select>
+  </div>
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+  <h3>Outputs</h3>
+  <h3>Details</h3>
+  <h3>Preferences</h3>
+</div>
+</script>
+
+<!-- Help text  -->
+<script type = "text/x-red" data-help-name="RE-time-based-trigger" >
+  <p>
+    Help text here
+  </p>
+</script>
