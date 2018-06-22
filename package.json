@@ -11,7 +11,8 @@
       "RE-trigger": "/pallets/re-trigger/re-trigger.js",
       "RE-task": "/pallets/re-task/re-task.js",
       "RE-daley": "/pallets/re-delay/re-delay.js",
-      "time-based-trigger": "/pallets/time-based-trigger/time-based-trigger.js"
+      "time-based-trigger": "/pallets/time-based-trigger/time-based-trigger.js",
+      "RE-filter": "/pallets/re-filter/re-filter.js"
     }
   },
   "author": "",

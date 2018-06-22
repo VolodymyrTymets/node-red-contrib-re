@@ -1,10 +1,99 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<!-- Defining a node -->
+<script type="text/javascript">
+  RED.nodes.registerType('RE-filter', {
+    category: 'Rightmart Events', // the palette category
+    color: '#E2D96E',
+    //icon: '', // saved in  icons
+    defaults: {
+      name: {value: ''},
+      value: {value: 'strings'},
+      operators: {value: 'is'},
+      secondvalue: {value: ''},
+    },
+    inputs: 1,
+    outputs: 1,
+    label: function () {
+      return this.name || 'RE-filter';
+    },
+    oneditprepare: function () {
+      const node = this;
+      let setOperatorsValue = this.operators;
+
+      $('#node-input-operators').on('change', (e) => node.operators = e.target.value);
+      setTimeout(function () {
+        $('#node-input-operators option[value=' + setOperatorsValue + ']').attr('selected', setOperatorsValue);
+      }, 0);
+
+      $('#node-input-value').on('change', function (e) {
+        const value = e.target.value;
+        $('#node-input-operators').find('option').remove().end();
+
+        function getListOfOperators(operators) {
+          for (let operator of operators) {
+            $('#node-input-operators').append($(`<option value=${operator}>${operator}</option>`));
+          }
+        }
+
+        switch (value) {
+          case 'strings': {
+            const operators = ['is', 'is not', 'contains', 'does not contain', 'is empty', 'not empty', 'starts with', 'ends with'];
+            getListOfOperators(operators);
+            break;
+          }
+          case 'booleans': {
+            const operators = ['is true', 'is false', 'is empty', 'not empty'];
+            getListOfOperators(operators);
+            break;
+          }
+          case 'number': {
+            const operators = ['equal', 'not equal', 'greater than', 'less than', 'between', 'greater than or equal to', 'less than or equal to', 'is empty', 'not empty'];
+            getListOfOperators(operators);
+            break;
+          }
+        }
+      })
+    }
+  });
+</script>
+
+<!-- Edit dialog -->
+<script type="text/x-red" data-template-name="RE-filter">
+  <div>
+    <p>Trigger</p>
+    <h3>Inputs</h3>
+    <div class="form-row">
+      <label for="node-input-value"><i class="fa fa-tag"></i>Type</label>
+      <select id="node-input-value">
+        <option value="strings">Strings</option>
+        <option value="booleans">Booleans</option>
+        <option value="number">Integers/Floats</option>
+        <option value="date">DateTimes</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label for="node-input-operators"><i class="fa fa-tag"></i>Operators</label>
+      <select id="node-input-operators">
+      </select>
+    </div>
+    <div class="form-row">
+      <label for="node-input-secondvalue"><i class="fa fa-tag"></i>Other Value</label>
+      <input type="text" id="node-input-secondvalue" placeholder="Value">
+    </div>
+    <div class="form-row">
+      <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+      <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <h3>Outputs</h3>
+    <h3>Details</h3>
+    <h3>References</h3>
+  </div>
+</script>
+
+<!-- Help text  -->
+<script type="text/x-red" data-help-name="RE-filter">
+  <p>
+    Help text here
+  </p>
+</script>
+
+

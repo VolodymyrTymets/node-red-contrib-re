@@ -1,43 +1,43 @@
 const _ = require('lodash');
-const { PalletManagerBase  } = require('../../../src/utils/PalletManagerBase');
+const {PalletManagerBase} = require('../../../src/utils/PalletManagerBase');
+
 /**
  * Provide class to help manage pallet
  *
  * **/
 
-class PalletManager extends  PalletManagerBase{
-    constructor(RED, palletConfig, node) {
+class PalletManager extends PalletManagerBase {
+  constructor(RED, palletConfig, node) {
     super(RED, palletConfig, node);
 
-    this._self.interval = palletConfig.interval;
-    this._self.value = palletConfig.value;
-    this._getCronString = this._getCronString.bind(this._self);
-    this.onInput = this.onInput.bind(this._self);
+  this._self.value = palletConfig.value;
+  this._self.operator = palletConfig.operators;
+  this._self.secondValue = palletConfig.secondvalue;
+  this._getFilteredValues = this._getFilteredValues.bind(this._self);
+  this.onInput = this.onInput.bind(this._self);
   }
 
-    _getCronString(interval, value) {
-      let cronsString = '';
-      switch (interval) {
-        case 'monthly': {
-          cronsString = `***/${value}**`;
-          break;
-        }
-        case 'weekly': {
-          const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-          for (let day of days) {
-            if (day === value) {
-              cronsString = `*****/${days.indexOf(day)}`;
-            }
-          }
-          break;
-        }
-        case 'daily': {
-          cronsString = `**/${value}***`;
-          break;
-        }
-      }
-      return cronsString;
-  }
+  // _getFilteredValues(value, operator, b, a) {
+  //   switch (value) {
+  //     case 'strings': {
+  //       switch (operator) {
+  //         case 'is': return (a, b) => a == b;
+  //         case 'is not': return (a, b) => a != b;
+  //         case 'contains': return (a, b) => (a + "").indexOf(b) != -1;
+  //         case 'does not contain': return (a, b) => (a + "").indexOf(b) == -1;
+  //         case 'is empty': return  a => a === false;
+  //         case 'not empty': return a => a === true;
+  //         case 'starts with': return;
+  //         case 'ends with': return;
+  //       }
+  //     }
+  //     case 'booleans': {
+  //       switch (operator) {
+  //         case 'is true': return
+  //       }
+  //     }
+  //   }
+  // }
 
   /**
    * Provide on input event
@@ -49,10 +49,11 @@ class PalletManager extends  PalletManagerBase{
    * **/
   onInput(msg) {
     try {
-      const {interval, value} = this;
-      const delay = this._getCronString(interval, value);
+      const firstValue = msg.payload;
+      const {value, operator, secondValue} = this;
+      const payload = this._getFilteredValues(value, operator, secondValue, firstValue);
 
-      _.extend(msg.payload, {delay});
+      _.extend(msg.payload, {payload});
       this.send(msg);
     } catch (error) {
       this.error(error);
@@ -60,4 +61,4 @@ class PalletManager extends  PalletManagerBase{
   }
 }
 
-module.exports = { PalletManager };
+module.exports = {PalletManager};
