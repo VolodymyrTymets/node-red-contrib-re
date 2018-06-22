@@ -1,6 +1,6 @@
 <!-- Defining a node -->
 <script type="text/javascript">
-  RED.nodes.registerType('time-based-trigger', {
+  RED.nodes.registerType('RE-time-based-trigger', {
     category: 'Rightmart Events',
     color: '#d2f81d',
     //icon: 'delay.png',
@@ -12,7 +12,7 @@
     inputs: 1,
     outputs: 1,
     label: function () {     // sets the default label contents
-      return this.name || 'time-based-trigger';
+      return this.name || 'RE-time-based-trigger';
     },
     labelStyle: function () {
       return this.name ? "node_label_italic" : "";
@@ -58,7 +58,7 @@
 </script>
 
 <!-- Edit dialog -->
-<script type="text/x-red" data-template-name="time-based-trigger">
+<script type="text/x-red" data-template-name="RE-time-based-trigger">
 <!--INPUT-->
 <div>
   <p>Trigger</p>
@@ -87,7 +87,7 @@
 </script>
 
 <!-- Help text  -->
-<script type = "text/x-red" data-help-name="time-based-trigger" >
+<script type = "text/x-red" data-help-name="RE-time-based-trigger" >
   <p>
     Help text here
   </p>

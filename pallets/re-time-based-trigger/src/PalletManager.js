@@ -49,12 +49,12 @@ class PalletManager extends  PalletManagerBase{
    * **/
   onInput(msg) {
     try {
-      const {interval, value} = this;
+      const { interval, value } = this;
       const delay = this._getCronString(interval, value);
 
-      _.extend(msg, {
-        payload: delay
-      });
+      msg.payload = msg.payload || {};
+      _.extend(msg.payload, { delay });
+
       this.send(msg);
     } catch (error) {
       this.error(error);

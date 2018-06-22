@@ -1,5 +1,5 @@
 const { PalletManager } = require('./src/PalletManager');
-const  MODULE_NAME = 'time-based-trigger';
+const  MODULE_NAME = 'RE-time-based-trigger';
 
 module.exports = function(RED) {
   function nodeGo(config) {
