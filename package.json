@@ -10,13 +10,15 @@
     "nodes": {
       "RE-trigger": "/pallets/re-trigger/re-trigger.js",
       "RE-task": "/pallets/re-task/re-task.js",
-      "RE-daley": "/pallets/re-delay/re-delay.js",
       "RE-time-based-trigger": "/pallets/re-time-based-trigger/re-time-based-trigger.js"
+      "RE-daley": "/pallets/re-delay/re-delay.js",
+      "RE-firebase-auth": "/pallets/re-firebase-auth/re-firebase-auth.js"
     }
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "firebase": "^5.1.0",
     "kue": "^0.11.6",
     "lodash": "^4.17.10"
   }

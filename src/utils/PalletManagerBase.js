@@ -1,3 +1,4 @@
+const _ = require('lodash');
 /**
  * Provide class to help manage pallet
  *
@@ -10,10 +11,11 @@ class PalletManagerBase {
     this._self._processError = this._processError.bind(this._self);
     this._self._processSuccess = this._processSuccess.bind(this._self);
     this._self._process = this._process.bind(this._self);
+    this._self.extendMsgPayload = this.extendMsgPayload.bind(this._self)
   }
 
   _processError(err) {
-    const message  = typeof err === 'string' ? err : err.message;
+    const message  = _.isString(err) ? err : err.message;
     this.error(message);
     this.status({ fill:"red", shape:"dot", text: message});
   }
@@ -22,6 +24,11 @@ class PalletManagerBase {
   }
   _process(message, fill = 'grey', shape = "dot") {
     this.status({ fill, shape, text: message });
+  }
+
+  extendMsgPayload(msg, object) {
+    msg.payload = _.isObject(msg.payload) ? msg.payload : {};
+    _.extend(msg.payload, object)
   }
 }
 
