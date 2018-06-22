@@ -43,7 +43,7 @@ class PalletManager extends  PalletManagerBase{
    * Provide on input event
    * to receive messages from the up-stream nodes in a flow
    * @params
-   *       {object}
+   *      {object}
    * @return -> to return some message for next node in flow use
    *      this.send(msg);
    * **/
